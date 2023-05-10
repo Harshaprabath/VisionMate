@@ -1,24 +1,19 @@
 from fastapi import FastAPI, File, UploadFile, APIRouter
-import os
-import shutil
+
+from Services.BillServices.billService import billValue,billType
 
 router = APIRouter()
 
-
-@router.post("/bill/uploadfile/")
-async def create_upload_file(file: UploadFile = File(...)):
-    # get the filename
-    #filename = file.filename
-    filename = "bill.jpg"
-
-    # create the folder if it doesn't exist
+@router.post("/bill/type/")
+async def bill_value(file: UploadFile = File(...)):
+    filename = "billtype.jpg"
     folder_name = "Storage/Bill"
-    if not os.path.exists(folder_name):
-        os.makedirs(folder_name)
+    filename = billType(file, folder_name, filename)
+    return {"filename": filename}
 
-    # save the file to the folder
-    with open(os.path.join(folder_name,filename), "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
-
-    # return a JSON response
+@router.post("/bill/value/")
+async def bill_value(file: UploadFile = File(...)):
+    filename = "billvalue.jpg"
+    folder_name = "Storage/Bill"
+    filename = billValue(file, folder_name, filename)
     return {"filename": filename}
