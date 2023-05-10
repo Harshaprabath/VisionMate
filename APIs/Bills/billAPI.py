@@ -15,5 +15,5 @@ async def bill_value(file: UploadFile = File(...)):
 async def bill_value(file: UploadFile = File(...)):
     filename = "billvalue.jpg"
     folder_name = "Storage/Bill"
-    filename = billValue(file, folder_name, filename)
-    return {"filename": filename}
+    res = billValue(file, folder_name, filename)
+    return res
